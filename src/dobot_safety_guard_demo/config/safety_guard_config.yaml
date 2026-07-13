@@ -1,0 +1,81 @@
+# Dobot 双向避障安全演示配置
+# Dobot bidirectional obstacle avoidance safety demo configuration
+
+# 机器人高层控制接口。当前工程不下发运动指令，仅用于开启本体内置避障。
+# Robot high-level control interface. This project does not send motion commands and is only used to enable built-in obstacle avoidance.
+robot:
+  grpc_addr: "192.168.5.2:50051"
+  enable_builtin_obstacle_avoidance: true
+
+# DDS 深度图来源。config_file 可使用相对工程根目录的路径。
+# DDS depth image source. config_file can use a path relative to the project root directory.
+dds:
+  config_file: "dobot_quad_sdk-main/low_level/python/config/dds_config.yaml"
+  domain_id: 0
+  front_depth_topic: "rt/camera/camera2/image_depth"
+  back_depth_topic: "rt/camera/camera3/image_depth"
+
+# 安全阈值与距离计算参数。danger 用于报警，recover 用于恢复迟滞。
+# Safety thresholds and distance calculation parameters. danger is used for alarms, and recover is used for recovery hysteresis.
+safety:
+  front_danger_distance_m: 0.50
+  front_recover_distance_m: 0.70
+  back_danger_distance_m: 0.50
+  back_recover_distance_m: 0.70
+  recover_stable_seconds: 2.0
+  stale_timeout_seconds: 3.0
+  # ROI 为深度图归一化坐标范围，取中间区域可降低地面和边缘噪声影响。
+  # ROI is the normalized coordinate range of the depth image; using the center area reduces ground and edge noise.
+  roi:
+    x_min: 0.15
+    x_max: 0.85
+    y_min: 0.15
+    y_max: 0.85
+  min_valid_depth_m: 0.10
+  max_valid_depth_m: 3.00
+  # percentile 比 min 更抗孤立噪声；需要更敏感时可改为 min。
+  # percentile is more robust to isolated noise than min; change to min if higher sensitivity is required.
+  distance_method: "percentile"
+  distance_percentile: 5.0
+  # 安全距离按固定频率处理，避免高帧率深度流造成回调积压。
+  # Safety distance is processed at a fixed frequency to avoid callback backlog from high-frame-rate depth streams.
+  distance_publish_period_seconds: 0.05
+  distance_sample_step: 2
+
+# RViz 可视化参数。
+# RViz visualization parameters.
+visualization:
+  publish_depth_image: true
+  publish_point_cloud: true
+  publish_markers: true
+  # true 时点云转到 safety_guard_base：前方为 +X，后方为 -X。
+  # When true, point clouds are transformed to safety_guard_base: front is +X and rear is -X.
+  pointcloud_in_base_frame: true
+  marker_frame_id: "safety_guard_base"
+  front_frame_id: "front_depth_camera"
+  back_frame_id: "back_depth_camera"
+  camera_intrinsics:
+    width: 640
+    height: 480
+    fx: 589.839
+    fy: 589.651
+    cx: 320.495
+    cy: 245.069
+  pointcloud:
+    # 默认只发布 ROI 内高密度点云，突出避障区域并降低 RViz 渲染压力。
+    # By default, only high-density point clouds inside the ROI are published to highlight the obstacle avoidance area and reduce RViz rendering load.
+    use_roi_only: true
+    sample_step: 4
+    max_points: 12000
+    publish_period_seconds: 0.2
+  depth_image:
+    publish_period_seconds: 0.1
+  markers:
+    publish_period_seconds: 0.2
+
+# 日志周期。设置为 0 表示关闭对应周期日志，仅保留状态切换日志。
+# Logging periods. Set to 0 to disable the corresponding periodic logs and keep only state transition logs.
+logging:
+  distance_log_period_seconds: 2.0
+  safety_log_period_seconds: 0.0
+  danger_log_period_seconds: 0.0
