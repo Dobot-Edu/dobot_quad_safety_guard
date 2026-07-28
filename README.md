@@ -1,10 +1,12 @@
 # Dobot Bidirectional Obstacle Avoidance Safety Demo
 
-> Document Version: v1.0
->
-> Date: 2026-5-28
+[中文](README.zh.md) | [English](README.md)
 
-------
+![Ubuntu](https://img.shields.io/badge/OS-Ubuntu%2022.04-E95420?logo=ubuntu&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![ROS2](https://img.shields.io/badge/ROS2-Humble-22314E?logo=ros)
+![SDK](https://img.shields.io/badge/Dobot%20SDK-v1.2-blue)
+![Version](https://img.shields.io/badge/Version-v1.0-green)
 
 This project demonstrates the bidirectional obstacle avoidance and safety perception capability of the Dobot quadruped robot based on front and rear depth cameras. The program reads front and rear depth images through DDS, calculates obstacle distances, and publishes depth images, point clouds, distance markers, and safety states in ROS 2 and RViz2.
 
