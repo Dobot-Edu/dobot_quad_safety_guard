@@ -1,10 +1,12 @@
 # Dobot 双向避障安全演示
 
-> 文档版本：v1.0
->
-> 日期：2026-5-28
+[中文](README.zh-CN.md) | [English](README.md)
 
-------
+![Ubuntu](https://img.shields.io/badge/OS-Ubuntu%2022.04-E95420?logo=ubuntu&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![ROS2](https://img.shields.io/badge/ROS2-Humble-22314E?logo=ros)
+![SDK](https://img.shields.io/badge/Dobot%20SDK-v1.2-blue)
+![Version](https://img.shields.io/badge/Version-v1.0-green)
 
 本工程用于演示 Dobot 四足机器人基于前后深度相机的双向避障安全感知能力。程序通过 DDS 读取前后深度图，计算障碍物距离，并在 ROS 2 与 RViz2 中发布深度图、点云、距离标记和安全状态。
 
