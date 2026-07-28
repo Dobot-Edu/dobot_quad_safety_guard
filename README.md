@@ -1,6 +1,6 @@
 # Dobot Bidirectional Obstacle Avoidance Safety Demo
 
-[中文](README.zh.md) | [English](README.md)
+[中文](README.zh-CN.md) | [English](README.md)
 
 ![Ubuntu](https://img.shields.io/badge/OS-Ubuntu%2022.04-E95420?logo=ubuntu&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
